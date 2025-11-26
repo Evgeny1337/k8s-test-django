@@ -30,6 +30,6 @@ spec:
               name: django-secret
               key: secret-key
         - name: DEBUG
-          value: "True"
+          value: "False"
         - name: ALLOWED_HOSTS
-          value: "*"
+          value: "star-burger.test"
