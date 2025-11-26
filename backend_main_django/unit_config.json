@@ -1,42 +1,41 @@
 {
     "listeners": {
         "*:80": {
-            "pass": "routes/app"
+            "pass": "routes/main"
         }
     },
-
     "routes": {
-        "app": [
+        "main": [
             {
                 "match": {
-                    "uri": "/static/*"
+                    "uri": ["/static/*"]
                 },
                 "action": {
-                    "share": "/"
+                    "share": "/webapp/src$uri"
                 }
             },
             {
                 "match": {
-                    "uri": "/media/*"
+                    "uri": ["/media/*"]
                 },
                 "action": {
-                    "share": "/"
+                    "share": "/webapp/src$uri"
                 }
             },
             {
                 "action": {
-                    "pass": "applications/app"
+                    "pass": "applications/django"
                 }
             }
         ]
     },
-    "applications":{
-       "app": {
-            "type":"python 3.9",
-            "path":"/webapp/src/",
-            "module":"webapp.wsgi",
+    "applications": {
+        "django": {
+            "type": "python",
+            "path": "/webapp/src",
+            "module": "webapp.wsgi",
             "environment": {
-                "DJANGO_SETTINGS_MODULE": "webapp.settings",
+                "DJANGO_SETTINGS_MODULE": "webapp.settings"
             }
         }
     }
