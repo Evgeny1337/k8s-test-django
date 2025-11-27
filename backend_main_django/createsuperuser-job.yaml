@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-createsuperuser
+spec:
+  template:
+    spec:
+      containers:
+      - name: createsuperuser
+        image: my-django-unit:latest
+        imagePullPolicy: Never
+        command: ["python", "manage.py", "createsuperuser", "--noinput"]
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: django-secret
+              key: database-url
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: django-secret
+              key: secret-key
+        - name: DEBUG
+          value: "False"
+        - name: ALLOWED_HOSTS
+          value: "star-burger.test"
+        - name: DJANGO_SUPERUSER_USERNAME
+          value: "admin"
+        - name: DJANGO_SUPERUSER_EMAIL
+          value: "admin@example.com"
+        - name: DJANGO_SUPERUSER_PASSWORD
+          value: "admin123"
+      restartPolicy: Never
+  backoffLimit: 1
