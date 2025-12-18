@@ -1,0 +1,50 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: yc-clusterissuer
+    ingress.alb.yc.io/external-ipv4-address: 84.201.136.220
+    ingress.alb.yc.io/group-name: k8s-sirius-dev
+    ingress.alb.yc.io/modify-header-response-replace: X-Robots-Tag=noarchive,X-Robots-Tag=nofollow,X-Robots-Tag=noindex
+    ingress.alb.yc.io/security-groups: enpm0ob9snmkr1211h1n
+    ingress.alb.yc.io/subnets: e2l0mpf95gvd8bks9f8e
+  creationTimestamp: "2025-12-11T16:08:45Z"
+  finalizers:
+  - ingress.ya.ru/final
+  generation: 1
+  name: main
+  namespace: edu-evgenij-sozykin
+  resourceVersion: "177863152"
+  uid: 39f35472-a172-4503-b29b-854a378aee31
+spec:
+  rules:
+  - host: edu-evgenij-sozykin.yc-sirius-dev.pelid.team
+    http:
+      paths:
+      - backend:
+          resource:
+            apiGroup: alb.yc.io
+            kind: HttpBackendGroup
+            name: edu-evgenij-sozykin-bucket
+        path: /
+        pathType: Prefix
+      - backend:
+          service:
+            name: main-nginx
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - edu-evgenij-sozykin.yc-sirius-dev.pelid.team
+    secretName: tls-secret-edu-evgenij-sozykin
+status:
+  loadBalancer:
+    ingress:
+    - ip: 84.201.136.220
+      ports:
+      - port: 80
+        protocol: TCP
+      - port: 443
+        protocol: TCP

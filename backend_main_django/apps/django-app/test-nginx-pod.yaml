@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"name":"test-nginx","namespace":"edu-evgenij-sozykin"},"spec":{"containers":[{"image":"nginx:1.23-alpine","name":"nginx","ports":[{"containerPort":80}]}]}}
+  creationTimestamp: "2025-12-18T16:07:30Z"
+  name: test-nginx
+  namespace: edu-evgenij-sozykin
+  resourceVersion: "177965355"
+  uid: 7b841793-dae6-4449-95d6-f85a0d6b17dd
+spec:
+  containers:
+  - image: nginx:1.23-alpine
+    imagePullPolicy: IfNotPresent
+    name: nginx
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-pxlgn
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: cl1r617gkfjl8r7g4qa0-yraf
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-pxlgn
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2025-12-18T16:07:36Z"
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2025-12-18T16:07:30Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2025-12-18T16:07:36Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2025-12-18T16:07:36Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2025-12-18T16:07:30Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://e57ed273f023a6be249cb03438df8dea7eea6366d654beeac6fed5afa8342eea
+    image: docker.io/library/nginx:1.23-alpine
+    imageID: docker.io/library/nginx@sha256:02ffd439b71d9ea9408e449b568f65c0bbbb94bebd8750f1d80231ab6496008e
+    lastState: {}
+    name: nginx
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2025-12-18T16:07:35Z"
+  hostIP: 10.103.0.20
+  hostIPs:
+  - ip: 10.103.0.20
+  phase: Running
+  podIP: 10.112.129.131
+  podIPs:
+  - ip: 10.112.129.131
+  qosClass: BestEffort
+  startTime: "2025-12-18T16:07:30Z"

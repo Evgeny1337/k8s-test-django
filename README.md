@@ -167,3 +167,16 @@ kubectl apply -f django-cronjob.yaml
    minikube addons enable ingress
  ```
 После выполнения всех шагов приложение будет доступно по адресу: `http://star-burger.test/admin/`
+
+## Развёртывание в Yandex Cloud
+
+**Домен:** `edu-evgenij-sozykin.yc-sirius-dev.pelid.team`  
+**HTTPS:** Настроен автоматически через Ingress.
+
+### Текущая конфигурация:
+- **Ingress:** `main` (маршрутизирует трафик с домена на поды)
+- **Pod:** `test-nginx` (тестовый веб-сервер)
+
+### Как обновить:
+1. Собрать образ: `docker build -t my-django-unit .`
+2. Обновить Pod: `kubectl apply -f apps/django-app/test-nginx-pod.yaml`

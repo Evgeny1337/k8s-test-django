@@ -1,0 +1,35 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2025-12-11T16:08:24Z"
+    finalizers:
+    - ingress.ya.ru/final
+    name: main-nginx
+    namespace: edu-evgenij-sozykin
+    resourceVersion: "174707334"
+    uid: ee89e645-2b9a-4909-a963-a0e2a054c444
+  spec:
+    clusterIP: 10.96.217.194
+    clusterIPs:
+    - 10.96.217.194
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - nodePort: 31770
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: main-nginx
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
