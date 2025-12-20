@@ -1,7 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: django-deployment
+  name: django-app
+  namespace: edu-evgenij-sozykin
+  labels:
+    app: django-app
 spec:
   replicas: 1
   selector:
@@ -14,22 +17,34 @@ spec:
     spec:
       containers:
       - name: django-app
-        image: my-django-unit:latest
-        imagePullPolicy: Never
+        image: evgeny1337depo/k8s-django-site:latest
         ports:
-        - containerPort: 80
+        - containerPort: 8000
         env:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: django-secret
-              key: database-url
+              name: django-app-secret
+              key: DATABASE_URL
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
-              name: django-secret
-              key: secret-key
+              name: django-app-secret
+              key: SECRET_KEY
         - name: DEBUG
-          value: "False"
+          valueFrom:
+            secretKeyRef:
+              name: django-app-secret
+              key: DEBUG
+        - name: DJANGO_SETTINGS_MODULE
+          value: "webapp.settings"
         - name: ALLOWED_HOSTS
-          value: "star-burger.test"
+          value: ".yc-sirius-dev.pelid.team,localhost,127.0.0.1,0.0.0.0"
+        volumeMounts:
+        - name: postgres-ssl-cert
+          mountPath: /home/postgres/.postgresql/
+          readOnly: true
+      volumes:
+      - name: postgres-ssl-cert
+        secret:
+          secretName: postgres-ssl-cert

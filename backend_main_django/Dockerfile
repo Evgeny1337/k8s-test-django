@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ /webapp/src/
 
 
-COPY unit_config.json /docker-entrypoint.d/
+COPY apps/django-app/config/unit_config.json /docker-entrypoint.d/
 
 WORKDIR /webapp/src
 
